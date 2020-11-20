@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Electron Updater Example</title>
+  <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="refresh" content="500000000000000000000; URL='http://127.0.0.1:5500/index.html'" />
+</head>
+<body>
+<body>
+  <img id="frontApp" src="./po/app.png">
+  <span id="version">vX.Y.Z</span>
+  <div id="messages"></div>
+<script>
+let version = window.location.hash.substring(1);
+document.getElementById('version').innerText = version;
+const {ipcRenderer} = require('electron');
+ipcRenderer.on('message', function(event, text) {
+  var container = document.getElementById('messages');
+  var message = document.createElement('div');
+  message.innerHTML = text;
+  container.appendChild(message);
+})
+</script>
+</body>
+</html>

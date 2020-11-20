@@ -1,0 +1,233 @@
+
+
+
+
+
+
+
+:root {
+  --app-bg: #6e5ed8;
+  --tabs-bg: #333333;
+
+  --tabs-bg-hover: rgba(23, 23, 23, 0.5);
+
+  --tabs-color: white;
+  --a: #6e5ed8;
+  --content-bg: rgb(23, 23, 23);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*{font-family: Arial, Helvetica, sans-serif;}
+img#frontApp {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  animation: 1s open ease; 
+}
+@keyframes open {
+  from {
+    width: 50px;
+  }
+  to {
+    width: 100px;
+  }
+}
+
+span#version {
+    color: white;
+    font-weight: bold;
+    bottom: 0px;
+    position: fixed;
+    padding: 10px;
+    left: 50%;
+    transform: translate(-50%);
+}
+div#messages {
+    color: white;
+    font-weight: bold;
+    bottom: 100px;
+    position: fixed;
+    padding: 10px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+
+/* - - - Titlebar */
+#titlebar {
+  display: block;
+  position: fixed;
+  height: 32px;
+  width: calc(100% - 2px);
+}
+
+.maximized #titlebar {
+  width: 100%;
+  padding: 0;
+}
+
+#main {
+  height: calc(100% - 32px);
+  margin-top: 32px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+#titlebar {
+  padding: 4px;
+}
+
+#titlebar #drag-region {
+  width: 100%;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+#titlebar {
+  color: #FFF;
+}
+
+#titlebar #drag-region {
+  display: grid;
+  grid-template-columns: auto 138px;
+}
+
+#window-title {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 12px;
+}
+
+.maximized #window-title {
+  margin-left: 12px;
+}
+
+#window-title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+#window-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 46px);
+  position: absolute;
+  top: -8px;
+  right: 14px;
+  height: 33px;
+}
+
+#window-controls {
+  -webkit-app-region: no-drag;
+}
+
+#window-controls .button {
+  grid-row: 1 / span 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media (-webkit-device-pixel-ratio: 1.5), (device-pixel-ratio: 1.5),
+(-webkit-device-pixel-ratio: 2), (device-pixel-ratio: 2),
+(-webkit-device-pixel-ratio: 3), (device-pixel-ratio: 3) {
+  #window-controls .icon {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+#window-controls .button {
+  user-select: none;
+}
+
+#window-controls .button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+#window-controls .button:active {
+  background: rgba(255,255,255,0.2);
+}
+
+#close-button:hover {
+  background: #E81123 !important;
+}
+
+#close-button:active {
+  background: #F1707A !important;
+}
+#close-button:active .icon {
+  filter: invert(1);
+}
+
+#min-button {
+  grid-column: 1;
+}
+#max-button, #restore-button {
+  grid-column: 2;
+}
+#close-button {
+  grid-column: 3;
+}
+
+#restore-button {
+  display: none !important;
+}
+
+.maximized #restore-button {
+  display: flex !important;
+}
+
+.maximized #max-button {
+  display: none;
+}
+/* End of Titlebar - - - */
+
+/* - - - Tabs */
+.tabs {
+  background: var(--tabs-bg);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 33px;
+  width: 100%;
+  -webkit-app-region: drag;
+}
+.tabs button {
+  color: white;
+  background: #5f5f5f;
+  padding: 5px 20px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 5px 5px 0px 0px;
+  margin-left: 20px;
+  margin-right: -20px;
+  -webkit-app-region: no-drag;
+}
+.tabs button:hover {
+  background: var(--tabs-bg-hover);
+}
+.tabs button:focus {
+  outline: none;
+}

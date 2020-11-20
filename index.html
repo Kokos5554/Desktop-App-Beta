@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>FalixNodes Software</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <script src="https://kit.fontawesome.com/76c26bec94.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <p id='coinOpened' style='display: none'><i class="fas fa-coins"></i> Coins has been minimized</p>     
+    <div id="offline" class="message"><i class="fas fa-exclamation-circle"></i> Connection lost</div>
+    <div id="online" class="message"><i class="fas fa-check"></i> Connection restored</div>
+    <div class="version">
+      <span id="version">vX.Y.Z</span> <!-- Version number is automatically added by a script -->
+      <div id="messages"></div>
+    </div>
+    <div id="myDropdown" class="dropdown-content">
+      <a type='button'  id="coinOpened" onclick="openCoinsWin(); toggleText()">Coins</a>
+      <a onclick="openHelpCenterWin();">Help</a>
+      <a onclick="openChangeLogWin();">Changelog</a>
+      <div id="seperator"></div>
+      <a onclick="openAboutWin();">About</a>
+      <a style="cursor: not-allowed" href="#">Settings</a>
+    </div>
+    <header id="titlebar">
+    <div class="tabs">
+        <button class="tablink" onclick="openPage('dash', this, 'var(--content-bg')" id="defaultOpen">Dashboard</button>
+        <button class="tablink" onclick="openPage('client', this, 'var(--content-bg')">Client</button>
+        <button class="tablink" onclick="openPage('panel', this, 'var(--content-bg')">Panel</button>
+    </div>
+    <button onclick="myFunction()" class="dropbtn">=</button>
+    <div>
+      <div id="window-controls">
+        <div class="button" id="min-button">
+          <img class="icon" srcset="./src/icons/min-w-10.png 1x, ./src/icons/min-w-12.png 1.25x, ./src/icons/min-w-15.png 1.5x, ./src/icons/min-w-15.png 1.75x, ./src/icons/min-w-20.png 2x, ./src/icons/min-w-20.png 2.25x, ./src/icons/min-w-24.png 2.5x, ./src/icons/min-w-30.png 3x, ./src/icons/min-w-30.png 3.5x" draggable="false" />
+        </div>
+        <div class="button" id="max-button">
+          <img class="icon" srcset="./src/icons/max-w-10.png 1x, ./src/icons/max-w-12.png 1.25x, ./src/icons/max-w-15.png 1.5x, ./src/icons/max-w-15.png 1.75x, ./src/icons/max-w-20.png 2x, ./src/icons/max-w-20.png 2.25x, ./src/icons/max-w-24.png 2.5x, ./src/icons/max-w-30.png 3x, ./src/icons/max-w-30.png 3.5x" draggable="false" />
+        </div>
+        <div class="button" id="restore-button">
+          <img class="icon" srcset="./src/icons/restore-w-10.png 1x, ./src/icons/restore-w-12.png 1.25x, ./src/icons/restore-w-15.png 1.5x, ./src/icons/restore-w-15.png 1.75x, ./src/icons/restore-w-20.png 2x, ./src/icons/restore-w-20.png 2.25x, ./src/icons/restore-w-24.png 2.5x, ./src/icons/restore-w-30.png 3x, ./src/icons/restore-w-30.png 3.5x" draggable="false" />
+        </div>
+        <div class="button" id="close-button">
+          <img class="icon" srcset="./src/icons/close-w-10.png 1x, ./src/icons/close-w-12.png 1.25x, ./src/icons/close-w-15.png 1.5x, ./src/icons/close-w-15.png 1.75x, ./src/icons/close-w-20.png 2x, ./src/icons/close-w-20.png 2.25x, ./src/icons/close-w-24.png 2.5x, ./src/icons/close-w-30.png 3x, ./src/icons/close-w-30.png 3.5x" draggable="false" />
+        </div>
+      </div>
+    </div>
+    </header>
+
+    <div class="splashScreen">
+      <img src="./po/app.png">
+      <i class="fas fa-spinner"></i>
+    </div>
+
+    <div class="content">
+        <div id="dash" class="tabContent">
+            <div class="Left">
+                <h1>FalixNodes</h1>
+                <p id="version">v2.2</p>
+            </div>
+            <div class="right">
+                <h1>News</h1>
+                <webview id="news" src="https://falixnodes.korbsstudio.com/"></webview>
+            </div>
+        </div>
+        <div id="panel" class="tabContent">
+          <webview src="https://gp.falixnodes.net"></webview>
+        </div>
+        <div id="client" class="tabContent">
+            <webview id="full" src="https://client.falixnodes.net"></webview>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <!-- Script for Electron -->
+    <script>require('./renderer.js')</script>
+    <!-- Tabs  - Credits to w3schools: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_full_page_tabs -->
+    <script>
+        function openPage(pageName,elmnt,color) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabContent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablink");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+          }
+          document.getElementById(pageName).style.display = "block";
+          elmnt.style.backgroundColor = color;
+        }
+    document.getElementById("defaultOpen").click();
+    </script>
+    <!-- Check Version/Update -->
+    <script>
+      let version = window.location.hash.substring(1);
+      document.getElementById('version').innerText = version;
+      const {ipcRenderer} = require('electron');
+      ipcRenderer.on('message', function(event, text) {
+        var container = document.getElementById('messages');
+        var message = document.createElement('div');
+        message.innerHTML = text;
+        container.appendChild(message);
+      })
+    </script>
+    <!-- Dropdown -->
+    <script>
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+      </script>
+      <!-- Open New Window Options -->
+    <script>
+      function openNews1Win() {
+      const remote = require('electron').remote;
+      const BrowserWindow = remote.BrowserWindow;
+
+      var win = new BrowserWindow({ width: 850, height: 620, maxWidth: 850, minWidth: 850, frame: false, webPreferences: {webviewTag: true}});
+      win.loadURL(`file://${__dirname}/page/news/v2.2-journey.html`);
+      }
+    </script>
+    <script>
+      function toggleText() {
+        var text = document.getElementById("coinOpened");
+        if (text.style.display === "none") {
+          text.style.display = "block";
+        } else {
+          text.style.display = "none";
+        }
+      }
+    </script>
+    <script>
+      function openCoinsWin() {
+      const remote = require('electron').remote;
+      const BrowserWindow = remote.BrowserWindow;
+
+      var win = new BrowserWindow({ width: 1000, height: 600, frame: false, webPreferences: {webviewTag: true}});
+      win.loadURL(`file://${__dirname}/page/coins.html`);
+      win.minimize()
+      }
+    </script>
+    <script>
+      function openSupportWin() {
+      const remote = require('electron').remote;
+      const BrowserWindow = remote.BrowserWindow;
+
+      var win = new BrowserWindow({ width: 1000, height: 800, frame: true, webPreferences: {webviewTag: true}});
+      win.loadURL(`https://discord.com/channels/710503370187735160/767774272902660096`);
+      }
+    </script>
+    <script>
+      function openHelpCenterWin() {
+      const remote = require('electron').remote;
+      const BrowserWindow = remote.BrowserWindow;
+
+      var win = new BrowserWindow({ width: 800, height: 600, frame: false, webPreferences: {webviewTag: true}});
+      win.loadURL(`file://${__dirname}/page/help.html`);
+      }
+    </script>
+    <script>
+      function openChangeLogWin() {
+      const remote = require('electron').remote;
+      const BrowserWindow = remote.BrowserWindow;
+
+      var win = new BrowserWindow({ width: 800, height: 600, frame: false, webPreferences: {webviewTag: true}});
+      win.loadURL(`file://${__dirname}/page/change-log.html`);
+      }
+    </script>
+    <script>
+      function openAboutWin() {
+      const remote = require('electron').remote;
+      const BrowserWindow = remote.BrowserWindow;
+
+      var win = new BrowserWindow({ width: 400, height: 600, resizable: false, frame: false, webPreferences: {webviewTag: true}});
+      win.loadURL(`file://${__dirname}/page/about.html`);
+      }
+    </script>
+    <!-- Test Internet Connection -->
+    <script>
+      let loaded;
+
+      const loadApp = () => {
+        App(
+          () => {
+            loaded = true;
+            clearTimeout(isSlow);
+            setTimeout(() => { document.body.className = ""; }, 1000);
+            console.debug("loaded");
+        });
+      };
+
+
+      window.addEventListener("offline", () => {
+        document.body.className = "offline";
+      });
+
+
+      window.addEventListener("online", () => {
+        document.body.className = "online";
+        console.debug("online");
+        setTimeout(() => { document.body.className = ""; }, 1000);
+
+        if (!loaded) {
+          console.debug("Reconnecting...");
+          loadApp();
+        }
+      });
+
+
+      window.addEventListener("DOMContentLoaded", loadApp);
+    </script>
+  </body>
+</html>
