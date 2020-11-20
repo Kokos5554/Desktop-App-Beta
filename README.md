@@ -2,6 +2,8 @@
 ![image](https://i.imgur.com/nHUmzBG.png)
 The FalixNodes application was built for users to have a quicker access to their FalixNodes client, panel, servers, and VPS(s) all through one place. We also include our help center in there if needed.
 
+## Building FalixNodes Software
+
 ### Requirements
 [Git](https://git-scm.com/downloads)
 
