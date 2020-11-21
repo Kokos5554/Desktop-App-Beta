@@ -294,7 +294,7 @@ div#window-controls img {
   width: calc(100% - 200px);
   padding: 6px 6px 27px 16px;
   z-index: -1;
-  animation: 5s splash_version ease;
+  animation: 2s splash_version ease;
   font-family: arial;
 }
 
@@ -387,7 +387,7 @@ div#seperator {
   background: rgba(110, 94, 216, 0.75);
   backdrop-filter: blur(2px);
   opacity: 1;
-  animation: 5s splash ease;
+  animation: 2s splash ease;
   z-index: -1; /* Move Splash behind everything */
 }
 i.fas.fa-spinner {
@@ -401,7 +401,7 @@ i.fas.fa-spinner {
   animation: 2s spin infinite linear;
 }
 .splashScreen img {
-  animation: 2s splash_img ease;
+  animation: 0.5s splash_img ease;
   z-index: -1;
   position: fixed;
   top: 50%;
@@ -411,7 +411,7 @@ i.fas.fa-spinner {
   opacity: 0;
 }
 .splashScreen img::before {
-  animation: 2s splash_bg linear;
+  animation: 0.5s splash_bg linear;
   content: "";
   position: fixed;
   top: 0px;
