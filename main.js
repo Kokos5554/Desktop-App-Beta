@@ -1,6 +1,7 @@
 const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
+var path = require('path');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -16,12 +17,14 @@ function createDefaultWindow() {
     height: 700,
     frame: false,
     webPreferences: {
+      icon: path.join(__dirname, '/po/app.png'),
       webviewTag: true,
       nodeIntegration: true,
       enableBlinkFeatures: true,
       experimentalFeatures: true,
     }
   });
+  win.setIcon(path.join(__dirname, '/po/app.png'));
   win.on('closed', () => {
     win = null;
   });

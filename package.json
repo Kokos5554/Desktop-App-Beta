@@ -1,6 +1,6 @@
 {
   "name": "falixnodes-beta",
-  "version": "2.9.1",
+  "version": "2.9.21",
   "main": "main.js",
   "description": "A quick access to your server",
   "author": "Korbs Studio",
@@ -26,6 +26,16 @@
         "repo": "Desktop-App-Beta",
         "token": ""
       }
-    ]
+    ],
+    "win": {
+        "asar": false,
+        "target": "nsis",
+        "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": true
+    }
   }
 }
